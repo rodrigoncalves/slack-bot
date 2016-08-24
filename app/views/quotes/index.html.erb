@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<%= nav_bar brand: "Citações na Novatics", brand_link: "/" %>
+<%= nav_bar brand: "Frases hilárias ditas na Novatics", brand_link: "/" %>
 
 <table class="table table-bordered table-hover table-responsive">
   <thead>
@@ -18,7 +18,7 @@
         <td><%= quote.author %></td>
         <td><%= link_to 'Ver', quote, class: "btn btn-default center" %></td>
         <td><%= link_to 'Editar', edit_quote_path(quote), class: "btn btn-default" %></td>
-        <td><%= link_to 'Apagar', quote, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %></td>
+        <td><%= link_to 'Apagar', quote, method: :delete, data: { confirm: 'Você tem certeza?' }, class: "btn btn-danger" %></td>
       </tr>
     <% end %>
   </tbody>
