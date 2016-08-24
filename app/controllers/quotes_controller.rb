@@ -27,13 +27,24 @@ class QuotesController < ApplicationController
   def create
     text = quote_params[:text]
     author = text.split[0]
-    msg = text.split[1..-1].join(' ')
-    @quote = Quote.new(author: author, message: msg)
+    phrase = text.split[1..-1].join(' ')
+    @quote = Quote.new(author: author, message: phrase)
 
     respond_to do |format|
       if @quote.save
         format.html { redirect_to @quote, notice: 'Quote was successfully created.' }
-        format.json { render :show, status: :created, location: @quote }
+
+        msg = sprintf('"%s" by %s', phrase, author)
+        json = {
+          text: "Frase adicionada com sucesso",
+          attachments: [{
+            fallback: "Required",
+            title: "Frase",
+            title_link: "novaquote.herokuapp.com",
+            text: msg
+          }]
+        }
+        format.json { render json: json, status: :ok, location: @quote }
       else
         format.html { render :new }
         format.json { render json: @quote.errors, status: :unprocessable_entity }
