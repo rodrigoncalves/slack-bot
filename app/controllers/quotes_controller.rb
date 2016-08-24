@@ -34,14 +34,12 @@ class QuotesController < ApplicationController
       if @quote.save
         format.html { redirect_to @quote, notice: 'Quote was successfully created.' }
 
-        msg = sprintf('"%s" by %s', phrase, author)
+        msg = sprintf('Frase adicionada: "%s". Dita por %s', phrase, author)
         json = {
-          text: "Frase adicionada com sucesso",
+          text: msg,
           attachments: [{
-            fallback: "Required",
-            title: "Frase",
-            title_link: "novaquote.herokuapp.com",
-            text: msg
+            title: "Ver todas as frases",
+            title_link: "http://novaquote.herokuapp.com",
           }]
         }
         format.json { render json: json, status: :ok, location: @quote }
