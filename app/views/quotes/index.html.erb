@@ -16,8 +16,8 @@
       <tr>
         <td>"<%= quote.message %>"</td>
         <td><%= quote.author %></td>
-        <td><%= link_to 'Ver', quote, class: "btn btn-default center" %></td>
-        <td><%= link_to 'Editar', edit_quote_path(quote), class: "btn btn-default" %></td>
+        <td><%= link_to 'Ver', quote, class: "btn btn-primary" %></td>
+        <td><%= link_to 'Editar', edit_quote_path(quote), class: "btn btn-primary" %></td>
         <td><%= link_to 'Apagar', quote, method: :delete, data: { confirm: 'Você tem certeza?' }, class: "btn btn-danger" %></td>
       </tr>
     <% end %>

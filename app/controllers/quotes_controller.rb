@@ -26,13 +26,13 @@ class QuotesController < ApplicationController
   # POST /quotes.json
   def create
     text = quote_params[:text]
-    author = text.split[0]
-    phrase = text.split[1..-1].join(' ')
+    author = text.split[0].titlecase
+    phrase = text.split[1..-1].join(' ').capitalize
     @quote = Quote.new(author: author, message: phrase)
 
     respond_to do |format|
       if @quote.save
-        format.html { redirect_to @quote, notice: 'Quote was successfully created.' }
+        format.html { redirect_to @quote, notice: 'Frase adicionada com sucesso.' }
 
         msg = sprintf('Frase adicionada: "%s". Dita por %s', phrase, author)
         json = {
@@ -55,7 +55,7 @@ class QuotesController < ApplicationController
   def update
     respond_to do |format|
       if @quote.update(quote_params)
-        format.html { redirect_to @quote, notice: 'Quote was successfully updated.' }
+        format.html { redirect_to @quote, notice: 'Frase atualizada com sucesso.' }
         format.json { render :show, status: :ok, location: @quote }
       else
         format.html { render :edit }
@@ -69,7 +69,7 @@ class QuotesController < ApplicationController
   def destroy
     @quote.destroy
     respond_to do |format|
-      format.html { redirect_to quotes_url, notice: 'Quote was successfully destroyed.' }
+      format.html { redirect_to quotes_url, notice: 'Frase apagada' }
       format.json { head :no_content }
     end
   end
