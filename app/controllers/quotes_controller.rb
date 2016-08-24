@@ -24,7 +24,10 @@ class QuotesController < ApplicationController
   # POST /quotes
   # POST /quotes.json
   def create
-    @quote = Quote.new(quote_params)
+    text = quote_params["text"]
+    author = text.split[0]
+    msg = text.split[1..-1].join(' ')
+    @quote = Quote.new(author: author, message: msg)
 
     respond_to do |format|
       if @quote.save
