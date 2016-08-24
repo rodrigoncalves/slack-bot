@@ -1,5 +1,6 @@
 class QuotesController < ApplicationController
   before_action :set_quote, only: [:show, :edit, :update, :destroy]
+  protect_from_forgery with: :null_session
 
   # GET /quotes
   # GET /quotes.json
@@ -24,7 +25,7 @@ class QuotesController < ApplicationController
   # POST /quotes
   # POST /quotes.json
   def create
-    text = quote_params["text"]
+    text = quote_params[:text]
     author = text.split[0]
     msg = text.split[1..-1].join(' ')
     @quote = Quote.new(author: author, message: msg)
@@ -72,6 +73,6 @@ class QuotesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def quote_params
-      params.require(:quote).permit(:message, :author)
+      params.permit(:text)
     end
 end

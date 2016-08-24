@@ -1,12 +1,12 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Quotes</h1>
+<%= nav_bar brand: "Citações na Novatics", brand_link: "/" %>
 
-<table>
+<table class="table table-bordered table-hover table-responsive">
   <thead>
     <tr>
-      <th>Message</th>
-      <th>Author</th>
+      <th>Frase</th>
+      <th>Autor</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -14,11 +14,11 @@
   <tbody>
     <% @quotes.each do |quote| %>
       <tr>
-        <td><%= quote.message %></td>
+        <td>"<%= quote.message %>"</td>
         <td><%= quote.author %></td>
-        <td><%= link_to 'Show', quote %></td>
-        <td><%= link_to 'Edit', edit_quote_path(quote) %></td>
-        <td><%= link_to 'Destroy', quote, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Ver', quote, class: "btn btn-default center" %></td>
+        <td><%= link_to 'Editar', edit_quote_path(quote), class: "btn btn-default" %></td>
+        <td><%= link_to 'Apagar', quote, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %></td>
       </tr>
     <% end %>
   </tbody>
@@ -26,4 +26,4 @@
 
 <br>
 
-<%= link_to 'New Quote', new_quote_path %>
+<%= link_to 'Nova citação', new_quote_path %>

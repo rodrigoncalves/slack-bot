@@ -11,14 +11,14 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :message %>
-    <%= f.text_field :message %>
+  <div class="field form-group">
+    <%= f.label 'Frase' %>
+    <%= f.text_field :message, placeholder: '"Só sei que nada sei"' %>
   </div>
 
-  <div class="field">
-    <%= f.label :author %>
-    <%= f.text_field :author %>
+  <div class="field form-group">
+    <%= f.label 'Autor' %>
+    <%= f.text_field :author, placeholder: 'Platão' %>
   </div>
 
   <div class="actions">
