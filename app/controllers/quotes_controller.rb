@@ -26,6 +26,13 @@ class QuotesController < ApplicationController
   # POST /quotes.json
   def create
     text = quote_params[:text]
+
+    if text.split.size < 2
+      json = { text: "Utilize o comando `/novaquotes` para salvar frases ou citações hilárias que aconteceram na Novatics.\nAlguns exemplos:\n•`/novaquotes` Platão Só sei que nada sei.\n•`/novaquotes` BenParker Com grandes poderes vem grandes responsabilidades.\n\nPara abrir este menu de ajuda, use `/novaquotes help`.\nPara ver todas as frases: http://novaquote.herokuapp.com" }
+      respond_to { |format| format.json { render json: json, status: :ok, location: @quote } }
+      return
+    end
+
     author = text.split[0].titlecase
     phrase = text.split[1..-1].join(' ').capitalize
     @quote = Quote.new(author: author, message: phrase)
@@ -34,9 +41,8 @@ class QuotesController < ApplicationController
       if @quote.save
         format.html { redirect_to @quote, notice: 'Frase adicionada com sucesso.' }
 
-        msg = sprintf('Frase adicionada: "%s". Dita por %s', phrase, author)
         json = {
-          text: msg,
+          text: sprintf('Frase adicionada: "%s". Dita por %s', phrase, author),
           attachments: [{
             title: "Ver todas as frases",
             title_link: "http://novaquote.herokuapp.com",
