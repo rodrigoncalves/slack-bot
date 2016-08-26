@@ -1,3 +1,6 @@
+require 'rubygems'
+require 'json'
+
 class QuotesController < ApplicationController
   before_action :set_quote, only: [:show, :edit, :update, :destroy]
   protect_from_forgery with: :null_session
@@ -33,9 +36,10 @@ class QuotesController < ApplicationController
       return
     end
 
-    author = text.split[0].titlecase
+    img = get_user_image(quote_params)
+    author = quote_params[:user_name]
     phrase = text.split[1..-1].join(' ').capitalize
-    @quote = Quote.new(author: author, message: phrase)
+    @quote = Quote.new(author: author, message: phrase, img: img)
 
     respond_to do |format|
       if @quote.save
@@ -89,5 +93,14 @@ class QuotesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def quote_params
       params.permit(:text)
+    end
+
+    def get_user_image(params)
+      client = HTTPClient.new
+      token = params[:token]
+      user = params[:user]
+      str = client.get_content("https://slack.com/api/users.profile.get?token=#{token}&user=#{user}")
+      response = JSON.parse(str)
+      img = response["profile"]["image_32"]
     end
 end
