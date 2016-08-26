@@ -4,26 +4,20 @@
 <%= nav_bar brand: "Frases hilárias ditas na Novatics", brand_link: "/" %>
 
 <table class="table table-bordered table-hover table-responsive">
-  <thead>
-    <tr>
-      <th class="text-center">Frase</th>
-      <th class="text-center">Autor</th>
-      <th class="text-center" colspan="3">Ações</th>
-    </tr>
-  </thead>
-
   <tbody>
-    <% @quotes.each do |quote| %>
-      <tr>
-        <td class="text-center">"<%= quote.message %>"</td>
-        <td class="text-center"><%= quote.author %></td>
-        <td class="text-center">
-          <!-- <%= link_to image_tag("https://cdn1.iconfinder.com/data/icons/web-ui-2/16/UI_Icons_Outline-24-128.png", size: "32x32"), quote %> -->
-          <%= link_to image_tag("https://cdn1.iconfinder.com/data/icons/turbo-outline/50/Edit-128.png", size: "32x32"), edit_quote_path(quote) %>
-          <%= link_to image_tag("https://cdn0.iconfinder.com/data/icons/round-ui-icons/128/close_red.png", size: "32x32"), quote, method: :delete, data: { confirm: 'Você tem certeza?' } %>
-        </td>
-      </tr>
-    <% end %>
+    <div class="card-columns">
+      <% @quotes.each do |quote| %>
+        <div class="card card-inverse text-xs-center" style="background-color: #D9534F; border-color: #D9534F">
+          <div class="card-block">
+            <%= image_tag("https://image.freepik.com/icones-gratis/perfil-macho-utilizador-sombra_318-40244.jpg", size: "32x32", class: "img-circle", style: "float: left") %>
+            <blockquote class="card-blockquote">
+              <p><%= quote.message %></p>
+              <footer><cite title="Source Title"><%= quote.author %></cite></footer>
+            </blockquote>
+          </div>
+        </div>
+      <% end %>
+    </div>
   </tbody>
 </table>
 
