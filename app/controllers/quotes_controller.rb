@@ -30,8 +30,8 @@ class QuotesController < ApplicationController
   def create
     text = quote_params[:text]
 
-    if text.split.size < 2
-      json = { text: "Utilize o comando `/novaquotes` para salvar frases ou citações hilárias que aconteceram na Novatics.\nAlguns exemplos:\n•`/novaquotes` Platão Só sei que nada sei.\n•`/novaquotes` BenParker Com grandes poderes vem grandes responsabilidades.\n\nPara abrir este menu de ajuda, use `/novaquotes help`.\nPara ver todas as frases: http://novaquote.herokuapp.com" }
+    if text == 'help' or text == ''
+      json = { text: "Utilize o comando `/novaquotes` para salvar frases ou citações hilárias que aconteceram na Novatics.\nAlguns exemplos:\n•`/novaquotes` Só sei que nada sei.\n•`/novaquotes` Com grandes poderes vem grandes responsabilidades.\n\nPara abrir este menu de ajuda, use `/novaquotes help`.\nPara ver todas as frases salvas: http://novaquote.herokuapp.com" }
       respond_to { |format| format.json { render json: json, status: :ok, location: @quote } }
       return
     end
