@@ -37,16 +37,15 @@ class QuotesController < ApplicationController
     end
 
     begin
-      img = get_user_image(quote_params)
+      user = get_user_profile(quote_params)
     rescue Exception => e
       json = { text: "Ocorreu um erro: #{e.message}" }
       respond_to { |format| format.json { render json: json, status: :ok, location: @quote } }
       return
     end
 
-    author = quote_params[:user_name]
     phrase = text.capitalize
-    @quote = Quote.new(author: author, message: phrase, image: img)
+    @quote = Quote.new(author: user['real_name'], message: phrase, image: user['image_32'])
 
     respond_to do |format|
       if @quote.save
@@ -102,14 +101,14 @@ class QuotesController < ApplicationController
       params.permit!
     end
 
-    def get_user_image(params)
+    def get_user_profile(params)
       client = HTTPClient.new
       token = 'xoxp-72060886741-72051010868-73339716976-8d6ea2a87f'
       user = params[:user_id]
       url = "https://slack.com/api/users.profile.get?token=#{token}&user=#{user}"
       str = client.get_content(url)
       response = JSON.parse(str)
-      raise response["error"] if not response["ok"]
-      img = response["profile"]["image_32"]
+      raise response['error'] if not response['ok']
+      profile = response['profile']
     end
 end
