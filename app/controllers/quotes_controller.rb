@@ -36,17 +36,24 @@ class QuotesController < ApplicationController
       return
     end
 
-    img = get_user_image(quote_params)
+    begin
+      img = get_user_image(quote_params)
+    rescue Exception => e
+      json = { text: "Ocorreu um erro: #{e.message}" }
+      respond_to { |format| format.json { render json: json, status: :ok, location: @quote } }
+      return
+    end
+
     author = quote_params[:user_name]
     phrase = text.split[1..-1].join(' ').capitalize
-    @quote = Quote.new(author: author, message: phrase, img: img)
+    @quote = Quote.new(author: author, message: phrase, image: img)
 
     respond_to do |format|
       if @quote.save
         format.html { redirect_to @quote, notice: 'Frase adicionada com sucesso.' }
 
         json = {
-          text: sprintf('Frase adicionada: "%s". Dita por %s', phrase, author),
+          text: "Frase adicionada: #{phrase}.",
           attachments: [{
             title: "Ver todas as frases",
             title_link: "http://novaquote.herokuapp.com",
@@ -92,15 +99,17 @@ class QuotesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def quote_params
-      params.permit(:text)
+      params.permit!
     end
 
     def get_user_image(params)
       client = HTTPClient.new
-      token = params[:token]
-      user = params[:user]
-      str = client.get_content("https://slack.com/api/users.profile.get?token=#{token}&user=#{user}")
+      token = 'xoxp-72060886741-72051010868-73339716976-8d6ea2a87f'
+      user = params[:user_id]
+      url = "https://slack.com/api/users.profile.get?token=#{token}&user=#{user}"
+      str = client.get_content(url)
       response = JSON.parse(str)
+      raise response["error"] if not response["ok"]
       img = response["profile"]["image_32"]
     end
 end

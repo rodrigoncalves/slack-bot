@@ -9,7 +9,7 @@
       <% @quotes.each do |quote| %>
         <div class="card card-inverse text-xs-center" style="background-color: #D9534F; border-color: #D9534F">
           <div class="card-block">
-            <%= image_tag("https://image.freepik.com/icones-gratis/perfil-macho-utilizador-sombra_318-40244.jpg", size: "32x32", class: "img-circle", style: "float: left") %>
+            <%= image_tag(quote.image, size: "32x32", class: "img-circle", style: "float: left") %>
             <blockquote class="card-blockquote">
               <p><%= quote.message %></p>
               <footer><cite title="Source Title"><%= quote.author %></cite></footer>
