@@ -45,7 +45,7 @@ class QuotesController < ApplicationController
     end
 
     author = quote_params[:user_name]
-    phrase = text.split[1..-1].join(' ').capitalize
+    phrase = text.capitalize
     @quote = Quote.new(author: author, message: phrase, image: img)
 
     respond_to do |format|
